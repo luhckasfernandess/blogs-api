@@ -52,9 +52,27 @@ const update = async (req, res) => {
   }
 };
 
+const remove = async (req, res) => {
+  try {
+    const { id } = req.params;
+    const { userEmail } = req;
+
+    const result = await postService.removeById({ id, userEmail });
+
+    if (result.error) {
+      return res.status(result.error.code).json({ message: result.error.message });
+    }
+
+    return res.status(204).end();
+  } catch (error) {
+    return res.status(500).json({ message: 'Internal Server Error' });
+  }
+};
+
 module.exports = {
   create,
   getAll,
   getById,
   update,
+  remove,
 };

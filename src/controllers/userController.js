@@ -50,8 +50,17 @@ const getById = async (req, res) => {
   }
 };
 
+const removeSelf = async (req, res) => {
+  const { userEmail } = req;
+
+  await userService.removeByEmail(userEmail);
+
+  return res.status(204).end();
+};
+
 module.exports = {
   create,
   getAll,
   getById,
+  removeSelf,
 };

@@ -48,9 +48,16 @@ const getUserById = async (id) => User.findOne({
   },
 });
 
+const removeByEmail = async (email) => User.destroy({
+  where: {
+    email,
+  },
+});
+
 module.exports = {
   getUser,
   createUser,
   getAllUsers,
   getUserById,
+  removeByEmail,
 };

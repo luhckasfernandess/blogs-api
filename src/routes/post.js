@@ -19,4 +19,6 @@ postRoutes.put('/:id',
   authToken.tokenAuthValidator,
   postController.update);
 
+postRoutes.delete('/:id', authToken.tokenAuthValidator, postController.remove);
+
 module.exports = postRoutes;
