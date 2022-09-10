@@ -15,6 +15,25 @@ const getUser = async ({ email, password }) => {
   return true;
 };
 
+const validateUserEmail = async (email) => User.findOne({
+  where: {
+    email,
+  },
+});
+
+const createUser = async ({ displayName, email, password, image }) => {
+  const isEmailAlreadyInUse = await validateUserEmail(email);
+
+  if (isEmailAlreadyInUse) {
+    return { error: { code: 409, message: 'User already registered' } };
+  }
+
+  await User.create({ displayName, email, password, image });
+
+  return {};
+};
+
 module.exports = {
   getUser,
+  createUser,
 };
