@@ -12,7 +12,8 @@ const tokenAuthValidator = (req, res, next) => {
   }
 
   try {
-    jwt.verify(authorization, JWT_SECRET);
+    const result = jwt.verify(authorization, JWT_SECRET);
+    req.userEmail = result.email;
 
     return next();
   } catch (error) {
