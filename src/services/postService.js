@@ -60,6 +60,23 @@ const createNewPost = async ({ title, content, categoryIds, userEmail }) => {
   }
 };
 
+const getAllPosts = async () => BlogPost.findAll({
+  include: [
+    {
+      model: User,
+      as: 'user',
+      attributes: {
+        exclude: ['password'],
+      },
+    },
+    {
+      model: Category,
+      as: 'categories',
+    },
+  ],
+});
+
 module.exports = {
   createNewPost,
+  getAllPosts,
 };

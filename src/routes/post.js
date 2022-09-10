@@ -6,6 +6,7 @@ const authToken = require('../middlewares/authTokenMiddleware');
 
 const postRoutes = express.Router();
 
+postRoutes.get('/', authToken.tokenAuthValidator, postController.getAll);
 postRoutes.post('/',
   postMiddleware.validatePost,
   authToken.tokenAuthValidator,
