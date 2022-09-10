@@ -94,8 +94,44 @@ const getPostById = async (id) => BlogPost.findOne({
   ],
 });
 
+const verifyId = async (email, id) => {
+  const userId = await getUserId(email);
+
+  const postId = await getPostById(id);
+
+  if (postId.dataValues.userId !== userId) {
+    return false;
+  }
+
+  return true;
+};
+
+const updatePost = async ({ title, content, id, userEmail }) => {
+  const confirmUser = await verifyId(userEmail, id);
+
+  if (!confirmUser) {
+    return { error: { code: 401, message: 'Unauthorized user' } };
+  }
+
+  const updated = new Date();
+
+  await BlogPost.update(
+    { title, content, updated },
+    {
+      where: {
+        id,
+      },
+    },
+  );
+
+  const updatedPost = await getPostById(id);
+
+  return updatedPost;
+};
+
 module.exports = {
   createNewPost,
   getAllPosts,
   getPostById,
+  updatePost,
 };

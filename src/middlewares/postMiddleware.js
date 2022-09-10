@@ -16,6 +16,22 @@ const validatePost = async (req, res, next) => {
   return next();
 };
 
+const validateUpdate = (body) => Joi.object({
+  title: Joi.string().required(),
+  content: Joi.string().required(),
+}).validate(body);
+
+const validatePut = async (req, res, next) => {
+  const { error } = validateUpdate(req.body);
+
+  if (error) {
+    return res.status(400).json({ message: 'Some required fields are missing' });
+  }
+
+  return next();
+};
+
 module.exports = {
   validatePost,
+  validatePut,
 };

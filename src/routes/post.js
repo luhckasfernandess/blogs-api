@@ -8,9 +8,15 @@ const postRoutes = express.Router();
 
 postRoutes.get('/', authToken.tokenAuthValidator, postController.getAll);
 postRoutes.get('/:id', authToken.tokenAuthValidator, postController.getById);
+
 postRoutes.post('/',
   postMiddleware.validatePost,
   authToken.tokenAuthValidator,
   postController.create);
+
+postRoutes.put('/:id',
+  postMiddleware.validatePut,
+  authToken.tokenAuthValidator,
+  postController.update);
 
 module.exports = postRoutes;
