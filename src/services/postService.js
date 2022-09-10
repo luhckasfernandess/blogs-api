@@ -76,7 +76,26 @@ const getAllPosts = async () => BlogPost.findAll({
   ],
 });
 
+const getPostById = async (id) => BlogPost.findOne({
+  where: { id },
+  include: [
+    {
+      model: User,
+      as: 'user',
+      attributes: {
+        exclude: ['password'],
+      },
+    },
+    {
+      model: Category,
+      as: 'categories',
+      through: { attributes: [] },
+    },
+  ],
+});
+
 module.exports = {
   createNewPost,
   getAllPosts,
+  getPostById,
 };
